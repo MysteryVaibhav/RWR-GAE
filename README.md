@@ -27,7 +27,7 @@ Model | ROC | AP
 ---|---|---
 GAE | 0.91430 | 0.92585
 VGAE | 0.921715 | 0.927751
-DW-GAE | 0.90998 | 0.93045
-DW-VGAE | 0.92971 | 0.94104
+DW-GAE | 0.918215 | 0.933019
+DW-VGAE | 0.929715 | 0.941047
 
 Runs in 2-3 mins for cora dataset on cpu. The code currently doesn't support GPU.
