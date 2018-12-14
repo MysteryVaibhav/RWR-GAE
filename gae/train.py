@@ -3,7 +3,7 @@ from __future__ import print_function
 
 import argparse
 import time
-
+import random
 import numpy as np
 import scipy.sparse as sp
 import torch
@@ -12,6 +12,7 @@ from torch import optim
 from gae.model import GCNModelVAE, GCNModelAE
 from gae.optimizer import loss_function
 from gae.utils import load_data, mask_test_edges, preprocess_graph, get_roc_score
+from deepWalk.graph import build_deepwalk_corpus, load_edgelist_from_csr_matrix
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='gcn_vae', help="models used")
@@ -23,6 +24,9 @@ parser.add_argument('--lr', type=float, default=0.01, help='Initial learning rat
 parser.add_argument('--dropout', type=float, default=0., help='Dropout rate (1 - keep probability).')
 parser.add_argument('--dataset-str', type=str, default='cora', help='type of dataset.')
 
+parser.add_argument('--walk-length', default=40, type=int, help='Length of the random walk started at each node')
+parser.add_argument('--window-size', default=5, type=int, help='Window size of skipgram model.')
+parser.add_argument('--number-walks', default=10, type=int, help='Number of random walks to start at each node')
 args = parser.parse_args()
 
 
@@ -38,6 +42,16 @@ def gae_for(args):
 
     adj_train, train_edges, val_edges, val_edges_false, test_edges, test_edges_false = mask_test_edges(adj)
     adj = adj_train
+
+    # Before proceeding further, make the structure for doing deepWalk
+    G = load_edgelist_from_csr_matrix(adj_orig, undirected=True)
+    print("Number of nodes: {}".format(len(G.nodes())))
+    num_walks = len(G.nodes()) * args.number_walks
+    print("Number of walks: {}".format(num_walks))
+    data_size = num_walks * args.walk_length
+    print("Data size (walks*length): {}".format(data_size))
+    walks = build_deepwalk_corpus(G, num_paths=args.number_walks,
+                                  path_length=args.walk_length, alpha=0, rand=random.Random(args.seed))
 
     # Some preprocessing
     adj_norm = preprocess_graph(adj)
