@@ -1,6 +1,7 @@
 from __future__ import division
 from __future__ import print_function
-
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 import argparse
 import time
 import random
@@ -17,7 +18,7 @@ from deepWalk.skipGram import SkipGram
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='gcn_vae', help="models used")
-parser.add_argument('--dw', type=bool, default=True, help="whether to use deepWalk regularization")
+parser.add_argument('--dw', type=int, default=0, help="whether to use deepWalk regularization, 0/1")
 parser.add_argument('--seed', type=int, default=42, help='Random seed.')
 parser.add_argument('--epochs', type=int, default=200, help='Number of epochs to train.')
 parser.add_argument('--hidden1', type=int, default=32, help='Number of units in hidden layer 1.')
@@ -47,7 +48,7 @@ def gae_for(args):
     adj = adj_train
 
     # Before proceeding further, make the structure for doing deepWalk
-    if args.dw:
+    if args.dw == 1:
         print('Using deepWalk regularization...')
         G = load_edgelist_from_csr_matrix(adj_orig, undirected=True)
         print("Number of nodes: {}".format(len(G.nodes())))
@@ -71,7 +72,7 @@ def gae_for(args):
         model = GCNModelAE(feat_dim, args.hidden1, args.hidden2, args.dropout)
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
 
-    if args.dw:
+    if args.dw == 1:
         sg = SkipGram(args.hidden2, adj.shape[0])
         optimizer_dw = optim.Adam(sg.parameters(), lr=args.lr_dw)
 
@@ -84,7 +85,7 @@ def gae_for(args):
         loss = loss_function(preds=recovered, labels=adj_label,
                              mu=mu, logvar=logvar, n_nodes=n_nodes,
                              norm=norm, pos_weight=pos_weight)
-        if args.dw:
+        if args.dw == 1:
             loss.backward(retain_graph=True)
         else:
             loss.backward()
@@ -92,7 +93,7 @@ def gae_for(args):
         optimizer.step()
 
         # After back-propagating gae loss, now do the deepWalk regularization
-        if args.dw:
+        if args.dw == 1:
             sg.train()
             for walk in build_deepwalk_corpus_iter(G, num_paths=args.number_walks,
                                                    path_length=args.walk_length, alpha=0,
@@ -124,7 +125,7 @@ def gae_for(args):
         hidden_emb = mu.data.numpy()
         roc_curr, ap_curr = get_roc_score(hidden_emb, adj_orig, val_edges, val_edges_false)
 
-        if args.dw:
+        if args.dw == 1:
             print("Epoch:", '%04d' % (epoch + 1), "train_loss_gae=", "{:.5f}".format(cur_loss),
                   "train_loss_dw=", "{:.5f}".format(cur_dw_loss), "val_ap=", "{:.5f}".format(ap_curr),
                   "time=", "{:.5f}".format(time.time() - t)
