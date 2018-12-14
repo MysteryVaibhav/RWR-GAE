@@ -17,3 +17,11 @@ python gae/train.py --model="gcn_vae" --dataset-str="cora"
 ```
 - Supported models are "gcn_vae" and "gcn_ae"
 - Supported datasets are "cora" and "citeseer"
+
+### Results on CORA
+Model | ROC | AP
+---|---|---
+GAE | 90.6 | 91.8
+VGAE | 90.9 | 92.7
+
+Runs in 2-3 mins for cora dataset on cpu. The code currently doesn't support GPU.
