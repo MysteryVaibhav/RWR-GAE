@@ -13,10 +13,11 @@ The code in this repo is based on or refers to https://github.com/tkipf/gae, htt
 
 ### To train a model run the following command
 ```bash
-python gae/train.py --model="gcn_vae" --dataset-str="cora"
+python gae/train.py --model="gcn_vae" --dataset-str="cora" --dw=True/False
 ```
 - Supported models are "gcn_vae" and "gcn_ae"
 - Supported datasets are "cora" and "citeseer"
+- dw, whether to use regularization or not
 
 ### Results on CORA
 Model | ROC | AP
