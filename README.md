@@ -9,11 +9,11 @@ The code in this repo is based on or refers to https://github.com/tkipf/gae, htt
 
 ### Requirements
 - Python 3
-- PyTorch 0.4
-- install requirements via ```
-pip install -r requirements.txt``` 
+- PyTorch 0.4 
 
-### How to run
+### To train a model run the following command
 ```bash
-python gae/train.py
+python gae/train.py --model="gcn_vae" --dataset-str="cora"
 ```
+- Supported models are "gcn_vae" and "gcn_ae"
+- Supported datasets are "cora" and "citeseer"
