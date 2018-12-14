@@ -165,10 +165,10 @@ def build_deepwalk_corpus_iter(G, num_paths, path_length, alpha=0,
 
     nodes = list(G.nodes())
 
-    for cnt in range(num_paths):
-        rand.shuffle(nodes)
-        for node in nodes:
-            yield G.random_walk(path_length, rand=rand, alpha=alpha, start=node)
+    rand.shuffle(nodes)
+    nodes = nodes[:num_paths]
+    for node in nodes:
+        yield G.random_walk(path_length, rand=rand, alpha=alpha, start=node)
 
 
 def clique(size):
