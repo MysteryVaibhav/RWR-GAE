@@ -13,16 +13,17 @@ The code in this repo is based on or refers to https://github.com/tkipf/gae, htt
 
 ### To train a model run the following command
 ```bash
-python gae/train.py --model="gcn_vae" --dataset-str="cora" --dw=True/False
+cd gae
+python train.py --model="gcn_vae" --dataset-str="cora" --dw=0
 ```
 - Supported models are "gcn_vae" and "gcn_ae"
 - Supported datasets are "cora" and "citeseer"
-- dw, whether to use regularization or not
+- dw, whether to use regularization or not (0: no regularization, 1: yes)
 
 ### Results on CORA
 Model | ROC | AP
 ---|---|---
 GAE | 90.6 | 91.8
-VGAE | 90.9 | 92.7
+VGAE | 92.2 | 92.7
 
 Runs in 2-3 mins for cora dataset on cpu. The code currently doesn't support GPU.
