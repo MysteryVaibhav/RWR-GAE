@@ -17,6 +17,7 @@ from deepWalk.graph import load_edgelist_from_csr_matrix, build_deepwalk_corpus_
 from deepWalk.skipGram import SkipGram
 from sklearn.cluster import KMeans
 from gae.clustering_metric import clustering_metrics
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='gcn_vae', help="models used")
@@ -81,7 +82,7 @@ def gae_for(args):
         optimizer_dw = optim.Adam(sg.parameters(), lr=args.lr_dw)
 
     hidden_emb = None
-    for epoch in range(args.epochs):
+    for epoch in tqdm(range(args.epochs)):
         t = time.time()
         model.train()
         optimizer.zero_grad()
@@ -139,19 +140,24 @@ def gae_for(args):
                   "val_ap=", "{:.5f}".format(ap_curr),
                   "time=", "{:.5f}".format(time.time() - t)
                   )
+            
+        if (epoch+1) % 10 == 0:
+            kmeans = KMeans(n_clusters=args.n_clusters, random_state=0).fit(hidden_emb)
+            predict_labels = kmeans.predict(hidden_emb)
+            cm = clustering_metrics(true_labels, predict_labels)
+            cm.evaluationClusterModelFromLabel()
+            roc_score, ap_score = get_roc_score(hidden_emb, adj_orig, test_edges, test_edges_false)
+            print('ROC: {}, AP: {}'.format(roc_score, ap_score))
 
     print("Optimization Finished!")
 
     roc_score, ap_score = get_roc_score(hidden_emb, adj_orig, test_edges, test_edges_false)
     print('Test ROC score: ' + str(roc_score))
     print('Test AP score: ' + str(ap_score))
-
-    print('Computing clustering accuracy...')
     kmeans = KMeans(n_clusters=args.n_clusters, random_state=0).fit(hidden_emb)
     predict_labels = kmeans.predict(hidden_emb)
     cm = clustering_metrics(true_labels, predict_labels)
     cm.evaluationClusterModelFromLabel()
-
 
 if __name__ == '__main__':
     gae_for(args)

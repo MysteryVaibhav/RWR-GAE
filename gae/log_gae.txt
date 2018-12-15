@@ -1,0 +1,245 @@
+Using cora dataset
+Epoch: 0001 train_loss= 0.78628 val_ap= 0.71846 time= 1.91929
+Epoch: 0002 train_loss= 0.76401 val_ap= 0.70760 time= 0.27694
+Epoch: 0003 train_loss= 0.72700 val_ap= 0.79340 time= 0.25114
+Epoch: 0004 train_loss= 0.72780 val_ap= 0.74806 time= 0.26009
+Epoch: 0005 train_loss= 0.68626 val_ap= 0.81079 time= 0.25651
+Epoch: 0006 train_loss= 0.65214 val_ap= 0.81920 time= 0.25222
+Epoch: 0007 train_loss= 0.61424 val_ap= 0.83386 time= 0.50886
+Epoch: 0008 train_loss= 0.57198 val_ap= 0.85665 time= 0.27889
+Epoch: 0009 train_loss= 0.54324 val_ap= 0.86396 time= 0.25645
+Epoch: 0010 train_loss= 0.53825 val_ap= 0.86561 time= 0.25606
+ACC=0.494092, f1_macro=0.465820, precision_macro=0.502690, recall_macro=0.501344, f1_micro=0.494092, precision_micro=0.494092, recall_micro=0.494092, NMI=0.438253, ADJ_RAND_SCORE=0.321832
+ROC: 0.8869185428961326, AP: 0.8814931208795164
+Epoch: 0011 train_loss= 0.53343 val_ap= 0.87615 time= 0.45460
+Epoch: 0012 train_loss= 0.53657 val_ap= 0.88026 time= 0.25794
+Epoch: 0013 train_loss= 0.53365 val_ap= 0.88149 time= 0.27688
+Epoch: 0014 train_loss= 0.52098 val_ap= 0.88385 time= 0.26482
+Epoch: 0015 train_loss= 0.51022 val_ap= 0.88690 time= 0.33229
+Epoch: 0016 train_loss= 0.50455 val_ap= 0.89051 time= 0.42475
+Epoch: 0017 train_loss= 0.50261 val_ap= 0.89388 time= 0.28359
+Epoch: 0018 train_loss= 0.50337 val_ap= 0.89480 time= 0.25402
+Epoch: 0019 train_loss= 0.50377 val_ap= 0.89434 time= 0.25727
+Epoch: 0020 train_loss= 0.50085 val_ap= 0.89600 time= 0.25599
+ACC=0.577548, f1_macro=0.511676, precision_macro=0.518484, recall_macro=0.553229, f1_micro=0.577548, precision_micro=0.577548, recall_micro=0.577548, NMI=0.456639, ADJ_RAND_SCORE=0.389394
+ROC: 0.9011230372053334, AP: 0.9037937747277746
+Epoch: 0021 train_loss= 0.49458 val_ap= 0.90019 time= 0.26863
+Epoch: 0022 train_loss= 0.48771 val_ap= 0.90533 time= 0.24979
+Epoch: 0023 train_loss= 0.48284 val_ap= 0.90825 time= 0.47164
+Epoch: 0024 train_loss= 0.48002 val_ap= 0.91101 time= 0.32900
+Epoch: 0025 train_loss= 0.47759 val_ap= 0.91151 time= 0.26999
+Epoch: 0026 train_loss= 0.47535 val_ap= 0.91069 time= 0.27554
+Epoch: 0027 train_loss= 0.47417 val_ap= 0.91029 time= 0.27162
+Epoch: 0028 train_loss= 0.47298 val_ap= 0.90933 time= 0.26031
+Epoch: 0029 train_loss= 0.47056 val_ap= 0.90938 time= 0.25524
+Epoch: 0030 train_loss= 0.46788 val_ap= 0.91011 time= 0.42279
+ACC=0.646233, f1_macro=0.630200, precision_macro=0.646882, recall_macro=0.669666, f1_micro=0.646233, precision_micro=0.646233, recall_micro=0.646233, NMI=0.471298, ADJ_RAND_SCORE=0.401206
+ROC: 0.9151258961073565, AP: 0.916504005585298
+Epoch: 0031 train_loss= 0.46588 val_ap= 0.91107 time= 0.27227
+Epoch: 0032 train_loss= 0.46418 val_ap= 0.91238 time= 0.26181
+Epoch: 0033 train_loss= 0.46237 val_ap= 0.91404 time= 0.27276
+Epoch: 0034 train_loss= 0.46064 val_ap= 0.91448 time= 0.26559
+Epoch: 0035 train_loss= 0.45924 val_ap= 0.91451 time= 0.24741
+Epoch: 0036 train_loss= 0.45807 val_ap= 0.91487 time= 0.26352
+Epoch: 0037 train_loss= 0.45678 val_ap= 0.91530 time= 0.52361
+Epoch: 0038 train_loss= 0.45530 val_ap= 0.91686 time= 0.27904
+Epoch: 0039 train_loss= 0.45382 val_ap= 0.91787 time= 0.28301
+Epoch: 0040 train_loss= 0.45243 val_ap= 0.91859 time= 0.27178
+ACC=0.604874, f1_macro=0.596789, precision_macro=0.607654, recall_macro=0.639698, f1_micro=0.604874, precision_micro=0.604874, recall_micro=0.604874, NMI=0.440505, ADJ_RAND_SCORE=0.354596
+ROC: 0.9176463386970751, AP: 0.9235404681144053
+Epoch: 0041 train_loss= 0.45103 val_ap= 0.91890 time= 0.30247
+Epoch: 0042 train_loss= 0.44970 val_ap= 0.91877 time= 0.42374
+Epoch: 0043 train_loss= 0.44864 val_ap= 0.91928 time= 0.26585
+Epoch: 0044 train_loss= 0.44776 val_ap= 0.91938 time= 0.25352
+Epoch: 0045 train_loss= 0.44668 val_ap= 0.92010 time= 0.25644
+Epoch: 0046 train_loss= 0.44539 val_ap= 0.92079 time= 0.25932
+Epoch: 0047 train_loss= 0.44419 val_ap= 0.92129 time= 0.27199
+Epoch: 0048 train_loss= 0.44312 val_ap= 0.92203 time= 0.32900
+Epoch: 0049 train_loss= 0.44209 val_ap= 0.92252 time= 0.45031
+Epoch: 0050 train_loss= 0.44123 val_ap= 0.92264 time= 0.26742
+ACC=0.585672, f1_macro=0.579994, precision_macro=0.584399, recall_macro=0.626541, f1_micro=0.585672, precision_micro=0.585672, recall_micro=0.585672, NMI=0.427341, ADJ_RAND_SCORE=0.333768
+ROC: 0.920984124812317, AP: 0.9248527114508652
+Epoch: 0051 train_loss= 0.44059 val_ap= 0.92311 time= 0.26446
+Epoch: 0052 train_loss= 0.43990 val_ap= 0.92312 time= 0.25980
+Epoch: 0053 train_loss= 0.43907 val_ap= 0.92356 time= 0.27980
+Epoch: 0054 train_loss= 0.43827 val_ap= 0.92370 time= 0.46160
+Epoch: 0055 train_loss= 0.43752 val_ap= 0.92384 time= 0.27450
+Epoch: 0056 train_loss= 0.43679 val_ap= 0.92388 time= 0.26354
+Epoch: 0057 train_loss= 0.43620 val_ap= 0.92410 time= 0.26039
+Epoch: 0058 train_loss= 0.43567 val_ap= 0.92409 time= 0.25926
+Epoch: 0059 train_loss= 0.43500 val_ap= 0.92442 time= 0.35999
+Epoch: 0060 train_loss= 0.43425 val_ap= 0.92472 time= 0.40871
+ACC=0.589734, f1_macro=0.581735, precision_macro=0.588086, recall_macro=0.626089, f1_micro=0.589734, precision_micro=0.589734, recall_micro=0.589734, NMI=0.430786, ADJ_RAND_SCORE=0.341306
+ROC: 0.922471185940251, AP: 0.9266067393638852
+Epoch: 0061 train_loss= 0.43356 val_ap= 0.92505 time= 0.25299
+Epoch: 0062 train_loss= 0.43293 val_ap= 0.92586 time= 0.26216
+Epoch: 0063 train_loss= 0.43236 val_ap= 0.92657 time= 0.25367
+Epoch: 0064 train_loss= 0.43181 val_ap= 0.92714 time= 0.33066
+Epoch: 0065 train_loss= 0.43120 val_ap= 0.92730 time= 0.46267
+Epoch: 0066 train_loss= 0.43061 val_ap= 0.92786 time= 0.26497
+Epoch: 0067 train_loss= 0.43008 val_ap= 0.92779 time= 0.26437
+Epoch: 0068 train_loss= 0.42957 val_ap= 0.92797 time= 0.25677
+Epoch: 0069 train_loss= 0.42908 val_ap= 0.92779 time= 0.25480
+Epoch: 0070 train_loss= 0.42860 val_ap= 0.92827 time= 0.25645
+ACC=0.591950, f1_macro=0.602905, precision_macro=0.636310, recall_macro=0.628497, f1_micro=0.591950, precision_micro=0.591950, recall_micro=0.591950, NMI=0.444861, ADJ_RAND_SCORE=0.339703
+ROC: 0.9254417075638481, AP: 0.9303041124757891
+Epoch: 0071 train_loss= 0.42813 val_ap= 0.92857 time= 0.24737
+Epoch: 0072 train_loss= 0.42767 val_ap= 0.92868 time= 0.25336
+Epoch: 0073 train_loss= 0.42724 val_ap= 0.92872 time= 0.34767
+Epoch: 0074 train_loss= 0.42681 val_ap= 0.92874 time= 0.46951
+Epoch: 0075 train_loss= 0.42640 val_ap= 0.92874 time= 0.26781
+Epoch: 0076 train_loss= 0.42599 val_ap= 0.92875 time= 0.28735
+Epoch: 0077 train_loss= 0.42560 val_ap= 0.92862 time= 0.26082
+Epoch: 0078 train_loss= 0.42521 val_ap= 0.92840 time= 0.26537
+Epoch: 0079 train_loss= 0.42482 val_ap= 0.92820 time= 0.25614
+Epoch: 0080 train_loss= 0.42443 val_ap= 0.92824 time= 0.25560
+ACC=0.595273, f1_macro=0.595429, precision_macro=0.621504, recall_macro=0.635512, f1_micro=0.595273, precision_micro=0.595273, recall_micro=0.595273, NMI=0.436441, ADJ_RAND_SCORE=0.327006
+ROC: 0.928120577973492, AP: 0.9327798584055503
+Epoch: 0081 train_loss= 0.42405 val_ap= 0.92850 time= 0.30639
+Epoch: 0082 train_loss= 0.42367 val_ap= 0.92856 time= 0.26309
+Epoch: 0083 train_loss= 0.42329 val_ap= 0.92867 time= 0.26018
+Epoch: 0084 train_loss= 0.42291 val_ap= 0.92861 time= 0.26421
+Epoch: 0085 train_loss= 0.42256 val_ap= 0.92846 time= 0.25545
+Epoch: 0086 train_loss= 0.42221 val_ap= 0.92852 time= 0.26054
+Epoch: 0087 train_loss= 0.42187 val_ap= 0.92880 time= 0.33669
+Epoch: 0088 train_loss= 0.42153 val_ap= 0.92881 time= 0.46043
+Epoch: 0089 train_loss= 0.42122 val_ap= 0.92884 time= 0.24606
+Epoch: 0090 train_loss= 0.42091 val_ap= 0.92886 time= 0.25292
+ACC=0.652511, f1_macro=0.650311, precision_macro=0.668780, recall_macro=0.667969, f1_micro=0.652511, precision_micro=0.652511, recall_micro=0.652511, NMI=0.470452, ADJ_RAND_SCORE=0.403697
+ROC: 0.929582434675529, AP: 0.9340393183446418
+Epoch: 0091 train_loss= 0.42060 val_ap= 0.92895 time= 0.25427
+Epoch: 0092 train_loss= 0.42030 val_ap= 0.92914 time= 0.26366
+Epoch: 0093 train_loss= 0.42001 val_ap= 0.92885 time= 0.24385
+Epoch: 0094 train_loss= 0.41971 val_ap= 0.92882 time= 0.51251
+Epoch: 0095 train_loss= 0.41942 val_ap= 0.92871 time= 0.26439
+Epoch: 0096 train_loss= 0.41912 val_ap= 0.92881 time= 0.25997
+Epoch: 0097 train_loss= 0.41883 val_ap= 0.92910 time= 0.26840
+Epoch: 0098 train_loss= 0.41854 val_ap= 0.92900 time= 0.25364
+Epoch: 0099 train_loss= 0.41824 val_ap= 0.92916 time= 0.26050
+Epoch: 0100 train_loss= 0.41795 val_ap= 0.92926 time= 0.24924
+ACC=0.596750, f1_macro=0.620423, precision_macro=0.665133, recall_macro=0.637309, f1_micro=0.596750, precision_micro=0.596750, recall_micro=0.596750, NMI=0.456059, ADJ_RAND_SCORE=0.339595
+ROC: 0.9315699836891358, AP: 0.9365718176320477
+Epoch: 0101 train_loss= 0.41765 val_ap= 0.92930 time= 0.40361
+Epoch: 0102 train_loss= 0.41736 val_ap= 0.92930 time= 0.26801
+Epoch: 0103 train_loss= 0.41706 val_ap= 0.92928 time= 0.26440
+Epoch: 0104 train_loss= 0.41677 val_ap= 0.92933 time= 0.25107
+Epoch: 0105 train_loss= 0.41647 val_ap= 0.92935 time= 0.26456
+Epoch: 0106 train_loss= 0.41619 val_ap= 0.92920 time= 0.26344
+Epoch: 0107 train_loss= 0.41590 val_ap= 0.92942 time= 0.27180
+Epoch: 0108 train_loss= 0.41561 val_ap= 0.92945 time= 0.50363
+Epoch: 0109 train_loss= 0.41533 val_ap= 0.92947 time= 0.27339
+Epoch: 0110 train_loss= 0.41506 val_ap= 0.92950 time= 0.24845
+ACC=0.586041, f1_macro=0.611893, precision_macro=0.661197, recall_macro=0.622897, f1_micro=0.586041, precision_micro=0.586041, recall_micro=0.586041, NMI=0.450402, ADJ_RAND_SCORE=0.327103
+ROC: 0.9334567149991538, AP: 0.9393422311715521
+Epoch: 0111 train_loss= 0.41479 val_ap= 0.92969 time= 0.28113
+Epoch: 0112 train_loss= 0.41452 val_ap= 0.92975 time= 0.39418
+Epoch: 0113 train_loss= 0.41426 val_ap= 0.92976 time= 0.26486
+Epoch: 0114 train_loss= 0.41401 val_ap= 0.92991 time= 0.25845
+Epoch: 0115 train_loss= 0.41376 val_ap= 0.93000 time= 0.25968
+Epoch: 0116 train_loss= 0.41352 val_ap= 0.93017 time= 0.27197
+Epoch: 0117 train_loss= 0.41329 val_ap= 0.93060 time= 0.25047
+Epoch: 0118 train_loss= 0.41308 val_ap= 0.93075 time= 0.25683
+Epoch: 0119 train_loss= 0.41287 val_ap= 0.93106 time= 0.24713
+Epoch: 0120 train_loss= 0.41267 val_ap= 0.93141 time= 0.28911
+ACC=0.650295, f1_macro=0.643209, precision_macro=0.654177, recall_macro=0.662825, f1_micro=0.650295, precision_micro=0.650295, recall_micro=0.650295, NMI=0.463144, ADJ_RAND_SCORE=0.404433
+ROC: 0.9335971396577238, AP: 0.9403073903294835
+Epoch: 0121 train_loss= 0.41248 val_ap= 0.93170 time= 0.26590
+Epoch: 0122 train_loss= 0.41230 val_ap= 0.93201 time= 0.26836
+Epoch: 0123 train_loss= 0.41213 val_ap= 0.93245 time= 0.24976
+Epoch: 0124 train_loss= 0.41197 val_ap= 0.93269 time= 0.26089
+Epoch: 0125 train_loss= 0.41182 val_ap= 0.93297 time= 0.27204
+Epoch: 0126 train_loss= 0.41167 val_ap= 0.93324 time= 0.27016
+Epoch: 0127 train_loss= 0.41154 val_ap= 0.93346 time= 0.25131
+Epoch: 0128 train_loss= 0.41141 val_ap= 0.93370 time= 0.27153
+Epoch: 0129 train_loss= 0.41129 val_ap= 0.93397 time= 0.28586
+Epoch: 0130 train_loss= 0.41118 val_ap= 0.93419 time= 0.26530
+ACC=0.597858, f1_macro=0.613854, precision_macro=0.649218, recall_macro=0.634810, f1_micro=0.597858, precision_micro=0.597858, recall_micro=0.597858, NMI=0.444762, ADJ_RAND_SCORE=0.343842
+ROC: 0.9321712892783973, AP: 0.9398320216291509
+Epoch: 0131 train_loss= 0.41107 val_ap= 0.93420 time= 0.27626
+Epoch: 0132 train_loss= 0.41097 val_ap= 0.93422 time= 0.27702
+Epoch: 0133 train_loss= 0.41088 val_ap= 0.93428 time= 0.26578
+Epoch: 0134 train_loss= 0.41079 val_ap= 0.93451 time= 0.27593
+Epoch: 0135 train_loss= 0.41070 val_ap= 0.93461 time= 0.26812
+Epoch: 0136 train_loss= 0.41062 val_ap= 0.93451 time= 0.25792
+Epoch: 0137 train_loss= 0.41054 val_ap= 0.93454 time= 0.26314
+Epoch: 0138 train_loss= 0.41047 val_ap= 0.93460 time= 0.27863
+Epoch: 0139 train_loss= 0.41040 val_ap= 0.93474 time= 0.52372
+Epoch: 0140 train_loss= 0.41033 val_ap= 0.93479 time= 0.27005
+ACC=0.614476, f1_macro=0.623876, precision_macro=0.664141, recall_macro=0.663570, f1_micro=0.614476, precision_micro=0.614476, recall_micro=0.614476, NMI=0.454091, ADJ_RAND_SCORE=0.335899
+ROC: 0.9296832523791176, AP: 0.9384929746164125
+Epoch: 0141 train_loss= 0.41026 val_ap= 0.93471 time= 0.25020
+Epoch: 0142 train_loss= 0.41020 val_ap= 0.93478 time= 0.26613
+Epoch: 0143 train_loss= 0.41014 val_ap= 0.93474 time= 0.26472
+Epoch: 0144 train_loss= 0.41008 val_ap= 0.93464 time= 0.25515
+Epoch: 0145 train_loss= 0.41002 val_ap= 0.93452 time= 0.25227
+Epoch: 0146 train_loss= 0.40996 val_ap= 0.93457 time= 0.40030
+Epoch: 0147 train_loss= 0.40991 val_ap= 0.93461 time= 0.37096
+Epoch: 0148 train_loss= 0.40986 val_ap= 0.93453 time= 0.25505
+Epoch: 0149 train_loss= 0.40980 val_ap= 0.93456 time= 0.27935
+Epoch: 0150 train_loss= 0.40975 val_ap= 0.93444 time= 0.25201
+ACC=0.573117, f1_macro=0.578775, precision_macro=0.616304, recall_macro=0.611439, f1_micro=0.573117, precision_micro=0.573117, recall_micro=0.573117, NMI=0.408045, ADJ_RAND_SCORE=0.292187
+ROC: 0.9280449646958006, AP: 0.9376582434330575
+Epoch: 0151 train_loss= 0.40970 val_ap= 0.93451 time= 0.26728
+Epoch: 0152 train_loss= 0.40965 val_ap= 0.93449 time= 0.46433
+Epoch: 0153 train_loss= 0.40961 val_ap= 0.93448 time= 0.27556
+Epoch: 0154 train_loss= 0.40956 val_ap= 0.93454 time= 0.25630
+Epoch: 0155 train_loss= 0.40951 val_ap= 0.93455 time= 0.24584
+Epoch: 0156 train_loss= 0.40946 val_ap= 0.93445 time= 0.25580
+Epoch: 0157 train_loss= 0.40942 val_ap= 0.93436 time= 0.25406
+Epoch: 0158 train_loss= 0.40937 val_ap= 0.93427 time= 0.25471
+Epoch: 0159 train_loss= 0.40932 val_ap= 0.93428 time= 0.24687
+Epoch: 0160 train_loss= 0.40928 val_ap= 0.93429 time= 0.24869
+ACC=0.611152, f1_macro=0.611999, precision_macro=0.630439, recall_macro=0.626351, f1_micro=0.611152, precision_micro=0.611152, recall_micro=0.611152, NMI=0.417636, ADJ_RAND_SCORE=0.336509
+ROC: 0.9272528255961747, AP: 0.9372537629564232
+Epoch: 0161 train_loss= 0.40923 val_ap= 0.93435 time= 0.27294
+Epoch: 0162 train_loss= 0.40918 val_ap= 0.93436 time= 0.24935
+Epoch: 0163 train_loss= 0.40914 val_ap= 0.93425 time= 0.25651
+Epoch: 0164 train_loss= 0.40909 val_ap= 0.93415 time= 0.26190
+Epoch: 0165 train_loss= 0.40904 val_ap= 0.93413 time= 0.26867
+Epoch: 0166 train_loss= 0.40900 val_ap= 0.93407 time= 0.25246
+Epoch: 0167 train_loss= 0.40895 val_ap= 0.93404 time= 0.24633
+Epoch: 0168 train_loss= 0.40890 val_ap= 0.93393 time= 0.25431
+Epoch: 0169 train_loss= 0.40885 val_ap= 0.93383 time= 0.25048
+Epoch: 0170 train_loss= 0.40880 val_ap= 0.93366 time= 0.44650
+ACC=0.608936, f1_macro=0.610101, precision_macro=0.629053, recall_macro=0.623626, f1_micro=0.608936, precision_micro=0.608936, recall_micro=0.608936, NMI=0.413770, ADJ_RAND_SCORE=0.330631
+ROC: 0.9267055294909786, AP: 0.9371305387844006
+Epoch: 0171 train_loss= 0.40875 val_ap= 0.93368 time= 0.26606
+Epoch: 0172 train_loss= 0.40870 val_ap= 0.93364 time= 0.26457
+Epoch: 0173 train_loss= 0.40865 val_ap= 0.93367 time= 0.27922
+Epoch: 0174 train_loss= 0.40860 val_ap= 0.93366 time= 0.43404
+Epoch: 0175 train_loss= 0.40854 val_ap= 0.93356 time= 0.27757
+Epoch: 0176 train_loss= 0.40849 val_ap= 0.93351 time= 0.26646
+Epoch: 0177 train_loss= 0.40843 val_ap= 0.93344 time= 0.26624
+Epoch: 0178 train_loss= 0.40838 val_ap= 0.93341 time= 0.27843
+Epoch: 0179 train_loss= 0.40832 val_ap= 0.93334 time= 0.25244
+Epoch: 0180 train_loss= 0.40826 val_ap= 0.93333 time= 0.25502
+ACC=0.605613, f1_macro=0.617341, precision_macro=0.654027, recall_macro=0.620728, f1_micro=0.605613, precision_micro=0.605613, recall_micro=0.605613, NMI=0.422388, ADJ_RAND_SCORE=0.315806
+ROC: 0.9260142080949415, AP: 0.9367227982778891
+Epoch: 0181 train_loss= 0.40820 val_ap= 0.93331 time= 0.38563
+Epoch: 0182 train_loss= 0.40814 val_ap= 0.93342 time= 0.25100
+Epoch: 0183 train_loss= 0.40807 val_ap= 0.93346 time= 0.26572
+Epoch: 0184 train_loss= 0.40801 val_ap= 0.93335 time= 0.26230
+Epoch: 0185 train_loss= 0.40794 val_ap= 0.93324 time= 0.27724
+Epoch: 0186 train_loss= 0.40787 val_ap= 0.93316 time= 0.25269
+Epoch: 0187 train_loss= 0.40781 val_ap= 0.93303 time= 0.26027
+Epoch: 0188 train_loss= 0.40773 val_ap= 0.93296 time= 0.25277
+Epoch: 0189 train_loss= 0.40766 val_ap= 0.93295 time= 0.55483
+Epoch: 0190 train_loss= 0.40759 val_ap= 0.93305 time= 0.25833
+ACC=0.621492, f1_macro=0.632100, precision_macro=0.667717, recall_macro=0.642323, f1_micro=0.621492, precision_micro=0.621492, recall_micro=0.621492, NMI=0.444588, ADJ_RAND_SCORE=0.359595
+ROC: 0.924862005768213, AP: 0.9360264965680222
+Epoch: 0191 train_loss= 0.40751 val_ap= 0.93295 time= 0.24932
+Epoch: 0192 train_loss= 0.40744 val_ap= 0.93294 time= 0.25352
+Epoch: 0193 train_loss= 0.40736 val_ap= 0.93292 time= 0.27207
+Epoch: 0194 train_loss= 0.40728 val_ap= 0.93289 time= 0.26617
+Epoch: 0195 train_loss= 0.40720 val_ap= 0.93282 time= 0.24986
+Epoch: 0196 train_loss= 0.40712 val_ap= 0.93287 time= 0.24505
+Epoch: 0197 train_loss= 0.40703 val_ap= 0.93287 time= 0.27223
+Epoch: 0198 train_loss= 0.40695 val_ap= 0.93274 time= 0.25047
+Epoch: 0199 train_loss= 0.40687 val_ap= 0.93267 time= 0.27877
+Epoch: 0200 train_loss= 0.40678 val_ap= 0.93267 time= 0.43513
+ACC=0.600443, f1_macro=0.605390, precision_macro=0.630292, recall_macro=0.615272, f1_micro=0.600443, precision_micro=0.600443, recall_micro=0.600443, NMI=0.405911, ADJ_RAND_SCORE=0.310533
+ROC: 0.9238070205128022, AP: 0.9354356110255786
+Optimization Finished!
+Test ROC score: 0.9238070205128022
+Test AP score: 0.9354356110255786
+ACC=0.600443, f1_macro=0.605390, precision_macro=0.630292, recall_macro=0.615272, f1_micro=0.600443, precision_micro=0.600443, recall_micro=0.600443, NMI=0.405911, ADJ_RAND_SCORE=0.310533
