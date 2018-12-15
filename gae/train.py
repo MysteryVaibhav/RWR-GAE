@@ -15,12 +15,14 @@ from gae.optimizer import loss_function
 from gae.utils import load_data, mask_test_edges, preprocess_graph, get_roc_score
 from deepWalk.graph import load_edgelist_from_csr_matrix, build_deepwalk_corpus_iter
 from deepWalk.skipGram import SkipGram
+from sklearn.cluster import KMeans
+from gae.clustering_metric import clustering_metrics
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='gcn_vae', help="models used")
 parser.add_argument('--dw', type=int, default=0, help="whether to use deepWalk regularization, 0/1")
 parser.add_argument('--seed', type=int, default=42, help='Random seed.')
-parser.add_argument('--epochs', type=int, default=200, help='Number of epochs to train.')
+parser.add_argument('--epochs', type=int, default=2, help='Number of epochs to train.')
 parser.add_argument('--hidden1', type=int, default=32, help='Number of units in hidden layer 1.')
 parser.add_argument('--hidden2', type=int, default=16, help='Number of units in hidden layer 2.')
 parser.add_argument('--lr', type=float, default=0.01, help='Initial learning rate.')
@@ -31,12 +33,14 @@ parser.add_argument('--walk-length', default=5, type=int, help='Length of the ra
 parser.add_argument('--window-size', default=5, type=int, help='Window size of skipgram model.')
 parser.add_argument('--number-walks', default=30, type=int, help='Number of random walks to start at each node')
 parser.add_argument('--lr_dw', type=float, default=0.001, help='Initial learning rate for regularization.')
+
+parser.add_argument('--n-clusters', default=7, type=int, help='number of clusters')
 args = parser.parse_args()
 
 
 def gae_for(args):
     print("Using {} dataset".format(args.dataset_str))
-    adj, features = load_data(args.dataset_str)
+    adj, features, y_test, tx, ty, test_maks, true_labels = load_data(args.dataset_str)
     n_nodes, feat_dim = features.shape
 
     # Store original adjacency matrix (without diagonal entries) for later
@@ -141,6 +145,12 @@ def gae_for(args):
     roc_score, ap_score = get_roc_score(hidden_emb, adj_orig, test_edges, test_edges_false)
     print('Test ROC score: ' + str(roc_score))
     print('Test AP score: ' + str(ap_score))
+
+    print('Computing clustering accuracy...')
+    kmeans = KMeans(n_clusters=args.n_clusters, random_state=0).fit(hidden_emb)
+    predict_labels = kmeans.predict(hidden_emb)
+    cm = clustering_metrics(true_labels, predict_labels)
+    cm.evaluationClusterModelFromLabel()
 
 
 if __name__ == '__main__':
