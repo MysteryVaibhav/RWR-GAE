@@ -70,4 +70,4 @@ class clustering_metrics:
         # fh.flush()
         # fh.close()
 
-        return acc, nmi, adjscore
+        return acc, nmi, f1_macro, precision_macro, adjscore

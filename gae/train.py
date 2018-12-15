@@ -1,6 +1,7 @@
 from __future__ import division
 from __future__ import print_function
 import os, sys
+
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 import argparse
 import time
@@ -36,6 +37,8 @@ parser.add_argument('--number-walks', default=30, type=int, help='Number of rand
 parser.add_argument('--lr_dw', type=float, default=0.001, help='Initial learning rate for regularization.')
 
 parser.add_argument('--n-clusters', default=7, type=int, help='number of clusters')
+parser.add_argument('--n-runs', default=10, type=int, help='number of runs for computing average scores')
+
 args = parser.parse_args()
 
 
@@ -82,82 +85,105 @@ def gae_for(args):
         optimizer_dw = optim.Adam(sg.parameters(), lr=args.lr_dw)
 
     hidden_emb = None
-    for epoch in tqdm(range(args.epochs)):
-        t = time.time()
-        model.train()
-        optimizer.zero_grad()
-        recovered, mu, logvar = model(features, adj_norm)
-        loss = loss_function(preds=recovered, labels=adj_label,
-                             mu=mu, logvar=logvar, n_nodes=n_nodes,
-                             norm=norm, pos_weight=pos_weight)
-        if args.dw == 1:
-            loss.backward(retain_graph=True)
-        else:
-            loss.backward()
-        cur_loss = loss.item()
-        optimizer.step()
 
-        # After back-propagating gae loss, now do the deepWalk regularization
-        if args.dw == 1:
-            sg.train()
-            for walk in build_deepwalk_corpus_iter(G, num_paths=args.number_walks,
-                                                   path_length=args.walk_length, alpha=0,
-                                                   rand=random.Random(args.seed)):
+    scores = {"AUC": [], "AP": [], "Acc": [], "NMI": [], "F1": [], "Prec": [], "ARI": []}
+    for run in range(args.n_runs):
+        for epoch in tqdm(range(args.epochs)):
+            t = time.time()
+            model.train()
+            optimizer.zero_grad()
+            recovered, mu, logvar = model(features, adj_norm)
+            loss = loss_function(preds=recovered, labels=adj_label,
+                                 mu=mu, logvar=logvar, n_nodes=n_nodes,
+                                 norm=norm, pos_weight=pos_weight)
+            if args.dw == 1:
+                loss.backward(retain_graph=True)
+            else:
+                loss.backward()
+            cur_loss = loss.item()
+            optimizer.step()
 
-                # Construct the pairs for predicting context node
-                idx_pairs = []
-                # for each node, treated as center word
-                for center_node_pos in range(len(walk)):
-                    # for each window position
-                    for w in range(-args.window_size, args.window_size + 1):
-                        context_node_pos = center_node_pos + w
-                        # make soure not jump out sentence
-                        if context_node_pos < 0 or context_node_pos >= len(walk) or center_node_pos == context_node_pos:
-                            continue
-                        context_node_idx = walk[context_node_pos]
-                        idx_pairs.append((int(walk[center_node_pos]), int(context_node_idx)))
+            # After back-propagating gae loss, now do the deepWalk regularization
+            if args.dw == 1:
+                sg.train()
+                for walk in build_deepwalk_corpus_iter(G, num_paths=args.number_walks,
+                                                       path_length=args.walk_length, alpha=0,
+                                                       rand=random.Random(args.seed)):
 
-                # Do actual prediction
-                for src_node, tgt_node in idx_pairs:
-                    optimizer_dw.zero_grad()
-                    log_softmax = sg(src_node, mu)
-                    y_true = torch.from_numpy(np.array([tgt_node])).long()
-                    loss_dw = F.nll_loss(log_softmax.view(1, -1), y_true)
-                    loss_dw.backward(retain_graph=True)
-                    cur_dw_loss = loss_dw.item()
-                    optimizer_dw.step()
+                    # Construct the pairs for predicting context node
+                    idx_pairs = []
+                    # for each node, treated as center word
+                    for center_node_pos in range(len(walk)):
+                        # for each window position
+                        for w in range(-args.window_size, args.window_size + 1):
+                            context_node_pos = center_node_pos + w
+                            # make soure not jump out sentence
+                            if context_node_pos < 0 or context_node_pos >= len(
+                                    walk) or center_node_pos == context_node_pos:
+                                continue
+                            context_node_idx = walk[context_node_pos]
+                            idx_pairs.append((int(walk[center_node_pos]), int(context_node_idx)))
 
-        hidden_emb = mu.data.numpy()
-        roc_curr, ap_curr = get_roc_score(hidden_emb, adj_orig, val_edges, val_edges_false)
+                    # Do actual prediction
+                    for src_node, tgt_node in idx_pairs:
+                        optimizer_dw.zero_grad()
+                        log_softmax = sg(src_node, mu)
+                        y_true = torch.from_numpy(np.array([tgt_node])).long()
+                        loss_dw = F.nll_loss(log_softmax.view(1, -1), y_true)
+                        loss_dw.backward(retain_graph=True)
+                        cur_dw_loss = loss_dw.item()
+                        optimizer_dw.step()
 
-        if args.dw == 1:
-            print("Epoch:", '%04d' % (epoch + 1), "train_loss_gae=", "{:.5f}".format(cur_loss),
-                  "train_loss_dw=", "{:.5f}".format(cur_dw_loss), "val_ap=", "{:.5f}".format(ap_curr),
-                  "time=", "{:.5f}".format(time.time() - t)
-                  )
-        else:
-            print("Epoch:", '%04d' % (epoch + 1), "train_loss=", "{:.5f}".format(cur_loss),
-                  "val_ap=", "{:.5f}".format(ap_curr),
-                  "time=", "{:.5f}".format(time.time() - t)
-                  )
-            
-        if (epoch+1) % 10 == 0:
-            kmeans = KMeans(n_clusters=args.n_clusters, random_state=0).fit(hidden_emb)
-            predict_labels = kmeans.predict(hidden_emb)
-            cm = clustering_metrics(true_labels, predict_labels)
-            cm.evaluationClusterModelFromLabel()
-            roc_score, ap_score = get_roc_score(hidden_emb, adj_orig, test_edges, test_edges_false)
-            print('ROC: {}, AP: {}'.format(roc_score, ap_score))
+            hidden_emb = mu.data.numpy()
+            roc_curr, ap_curr = get_roc_score(hidden_emb, adj_orig, val_edges, val_edges_false)
 
-    print("Optimization Finished!")
+            if args.dw == 1:
+                tqdm.write("Epoch: {}, train_loss_gae={:.5f}, train_loss_dw={:.5f}, val_ap={:.5f}, time={:.5f}".format(
+                    epoch + 1, cur_loss, cur_dw_loss,
+                    ap_curr, time.time() - t))
+            else:
+                tqdm.write("Epoch: {}, train_loss_gae={:.5f}, val_ap={:.5f}, time={:.5f}".format(
+                    epoch + 1, cur_loss,
+                    ap_curr, time.time() - t))
 
-    roc_score, ap_score = get_roc_score(hidden_emb, adj_orig, test_edges, test_edges_false)
-    print('Test ROC score: ' + str(roc_score))
-    print('Test AP score: ' + str(ap_score))
-    kmeans = KMeans(n_clusters=args.n_clusters, random_state=0).fit(hidden_emb)
-    predict_labels = kmeans.predict(hidden_emb)
-    cm = clustering_metrics(true_labels, predict_labels)
-    cm.evaluationClusterModelFromLabel()
+            # if (epoch+1) % 10 == 0:
+            #     kmeans = KMeans(n_clusters=args.n_clusters, random_state=0).fit(hidden_emb)
+            #     predict_labels = kmeans.predict(hidden_emb)
+            #     cm = clustering_metrics(true_labels, predict_labels)
+            #     cm.evaluationClusterModelFromLabel()
+            #     roc_score, ap_score = get_roc_score(hidden_emb, adj_orig, test_edges, test_edges_false)
+            #     print('ROC: {}, AP: {}'.format(roc_score, ap_score))
+
+        print("Optimization Finished for run {}!".format(run))
+
+        roc_score, ap_score = get_roc_score(hidden_emb, adj_orig, test_edges, test_edges_false)
+        print('Test AUC score: ' + str(roc_score))
+        print('Test AP score: ' + str(ap_score))
+        kmeans = KMeans(n_clusters=args.n_clusters, random_state=0).fit(hidden_emb)
+        predict_labels = kmeans.predict(hidden_emb)
+        cm = clustering_metrics(true_labels, predict_labels)
+        acc, nmi, f1, prec, ari = cm.evaluationClusterModelFromLabel()
+        scores['AUC'].append(roc_score)
+        scores['AP'].append(ap_score)
+        scores['NMI'].append(nmi)
+        scores['Acc'].append(acc)
+        scores['Prec'].append(prec)
+        scores['ARI'].append(ari)
+        scores['F1'].append(f1)
+
+    print("Mean scores after {} runs".format(args.n_runs))
+    print('-------------------------------------------------')
+    print("Link Prediction Scores: ")
+    print('Test AUC score: ' + str(np.mean(scores['AUC'])))
+    print('Test AP score: ' + str(np.mean(scores['AP'])))
+    print("Clustering Scores: ")
+    print('Test Acc score: ' + str(np.mean(scores['Acc'])))
+    print('Test F1 score: ' + str(np.mean(scores['F1'])))
+    print('Test Prec score: ' + str(np.mean(scores['Prec'])))
+    print('Test NMI score: ' + str(np.mean(scores['NMI'])))
+    print('Test ARI score: ' + str(np.mean(scores['ARI'])))
+    print('-------------------------------------------------')
+
 
 if __name__ == '__main__':
     gae_for(args)
