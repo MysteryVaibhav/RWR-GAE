@@ -52,12 +52,12 @@ class clustering_metrics:
         recall_micro = metrics.recall_score(self.true_label, new_predict, average='micro')
         return acc, f1_macro, precision_macro, recall_macro, f1_micro, precision_micro, recall_micro
 
-    def evaluationClusterModelFromLabel(self):
+    def evaluationClusterModelFromLabel(self, tqdm):
         nmi = metrics.normalized_mutual_info_score(self.true_label, self.pred_label)
         adjscore = metrics.adjusted_rand_score(self.true_label, self.pred_label)
         acc, f1_macro, precision_macro, recall_macro, f1_micro, precision_micro, recall_micro = self.clusteringAcc()
 
-        print(
+        tqdm.write(
             'ACC=%f, f1_macro=%f, precision_macro=%f, recall_macro=%f, f1_micro=%f, precision_micro=%f, recall_micro=%f, NMI=%f, ADJ_RAND_SCORE=%f' % (
             acc, f1_macro, precision_macro, recall_macro, f1_micro, precision_micro, recall_micro, nmi, adjscore))
 
@@ -70,4 +70,4 @@ class clustering_metrics:
         # fh.flush()
         # fh.close()
 
-        return acc, nmi, f1_macro, precision_macro, adjscore
+        return acc, nmi, adjscore
