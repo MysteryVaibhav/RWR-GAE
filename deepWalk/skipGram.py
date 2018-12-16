@@ -9,7 +9,7 @@ class SkipGram(nn.Module):
         self.num_nodes = num_nodes
         #self.context_embds = torch.Tensor(torch.randn(input_feat_dim, num_nodes).float())
         #self.context_embds.requires_grad = True
-        self.context_embds = torch.nn.Parameter(torch.nn.init.xavier_uniform(torch.randn(input_feat_dim, num_nodes)))
+        self.context_embds = torch.nn.Parameter(torch.randn(input_feat_dim, num_nodes))
 
     def get_input_layer(self, word_idx):
         x = torch.zeros(self.num_nodes).float()
