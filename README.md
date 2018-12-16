@@ -23,11 +23,30 @@ python train.py --model="gcn_ae" --dataset-str="cora" --dw=1 --epochs=200 --walk
 - refer to _gae/train.py_ for other program arguments
 
 ### Results on CORA test set
+Link Prediction results:
+
 Model | ROC | AP
 ---|---|---
-GAE | 0.91430 | 0.92585
-VGAE | 0.921715 | 0.927751
-DW-GAE | 0.918215 | 0.933019
-DW-VGAE | 0.929715 | 0.941047
+GAE | 0.91 | 0.92
+VGAE | 0.914 | 0.926
+GAE (our impl) | 0.91430 | 0.92585
+VGAE (our impl) | 0.921715 | 0.927751
+ARGE | 0.924 | 0.932
+ARVGE | 0.924 | 0.926
+DW-GAE | 0.918 | 0.933
+DW-VGAE | **0.929** | **0.941**
+
+Clustering results:
+
+Model | Acc | NMI | F1 | Precision | ARI
+---|---|---|---|---|---
+GAE | 0.596 | 0.429 | 0.595 | 0.596 | 0.347
+VGAE | 0.609 | 0.436 | 0.609 | 0.609 | 0.346
+GAE (our impl) | 0.526 | 0.42 | 0.508 | 0.530 | 0.308
+VGAE (our impl) | 0.590 | 0.445 | 0.563 | 0.578 | 0.351
+ARGE | 0.640 | 0.449 | 0.619 | 0.646 | 0.352
+ARVGE | 0.638 | 0.450 | 0.627 | 0.624 | 0.374
+DW-GAE | 0.682 | 0.472 | **0.687** | 0.690 | 0.398
+DW-VGAE | **0.688** | **0.487** | 0.675 | **0.698** | **0.446**
 
 Runs in 2-3 mins for cora dataset on cpu. The code currently doesn't support GPU.
