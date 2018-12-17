@@ -86,6 +86,7 @@ def gae_for(args):
 
         # Construct the nodes for doing random walk. Doing it before since the seed is fixed
         nodes_in_G = list(G.nodes())
+        chunks = len(nodes_in_G) // args.number_walks
         random.Random().shuffle(nodes_in_G)
 
     hidden_emb = None
@@ -110,7 +111,7 @@ def gae_for(args):
             for walk in build_deepwalk_corpus_iter(G, num_paths=args.number_walks,
                                                    path_length=args.walk_length, alpha=0,
                                                    rand=random.Random(SEED),
-                                                   chunk=epoch,
+                                                   chunk=epoch % chunks,
                                                    nodes=nodes_in_G):
 
                 # Construct the pairs for predicting context node
