@@ -94,16 +94,7 @@ def gae_for(args):
         t = time.time()
         model.train()
         optimizer.zero_grad()
-        recovered, mu, logvar = model(features, adj_norm)
-        loss = loss_function(preds=recovered, labels=adj_label,
-                             mu=mu, logvar=logvar, n_nodes=n_nodes,
-                             norm=norm, pos_weight=pos_weight)
-        if args.dw == 1:
-            loss.backward(retain_graph=True)
-        else:
-            loss.backward()
-        cur_loss = loss.item()
-        optimizer.step()
+        z, mu, logvar = model(features, adj_norm)
 
         # After back-propagating gae loss, now do the deepWalk regularization
         if args.dw == 1:
@@ -136,6 +127,13 @@ def gae_for(args):
                     loss_dw.backward(retain_graph=True)
                     cur_dw_loss = loss_dw.item()
                     optimizer_dw.step()
+
+        loss = loss_function(preds=model.dc(z), labels=adj_label,
+                             mu=mu, logvar=logvar, n_nodes=n_nodes,
+                             norm=norm, pos_weight=pos_weight)
+        loss.backward()
+        cur_loss = loss.item()
+        optimizer.step()
 
         hidden_emb = mu.data.numpy()
         roc_curr, ap_curr = get_roc_score(hidden_emb, adj_orig, val_edges, val_edges_false)

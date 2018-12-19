@@ -28,7 +28,7 @@ class GCNModelVAE(nn.Module):
     def forward(self, x, adj):
         mu, logvar = self.encode(x, adj)
         z = self.reparameterize(mu, logvar)
-        return self.dc(z), mu, logvar
+        return z, mu, logvar
 
 
 class InnerProductDecoder(nn.Module):
@@ -56,6 +56,6 @@ class GCNModelAE(nn.Module):
         hidden1 = self.gc1(x, adj)
         return self.gc2(hidden1, adj)
 
-    def forward(self, x, adj):
+    def forward(self, x, adj, encode=False):
         z = self.encode(x, adj)
-        return self.dc(z), z, None
+        return z, z, None
