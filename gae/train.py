@@ -37,6 +37,7 @@ parser.add_argument('--walk-length', default=5, type=int, help='Length of the ra
 parser.add_argument('--window-size', default=3, type=int, help='Window size of skipgram model.')
 parser.add_argument('--number-walks', default=5, type=int, help='Number of random walks to start at each node')
 parser.add_argument('--lr_dw', type=float, default=0.001, help='Initial learning rate for regularization.')
+parser.add_argument('--context', type=int, default=0, help="whether to use context nodes for skipgram")
 
 parser.add_argument('--n-clusters', default=7, type=int, help='number of clusters')
 args = parser.parse_args()
@@ -105,18 +106,23 @@ def gae_for(args):
                                                    chunk=epoch % chunks,
                                                    nodes=nodes_in_G):
 
-                # Construct the pairs for predicting context node
                 idx_pairs = []
-                # for each node, treated as center word
-                for center_node_pos in range(len(walk)):
-                    # for each window position
-                    for w in range(-args.window_size, args.window_size + 1):
-                        context_node_pos = center_node_pos + w
-                        # make soure not jump out sentence
-                        if context_node_pos < 0 or context_node_pos >= len(walk) or center_node_pos == context_node_pos:
-                            continue
-                        context_node_idx = walk[context_node_pos]
-                        idx_pairs.append((int(walk[center_node_pos]), int(context_node_idx)))
+                if args.context == 1:
+                    # Construct the pairs for predicting context node
+                    # for each node, treated as center word
+                    for center_node_pos in range(len(walk)):
+                        # for each window position
+                        for w in range(-args.window_size, args.window_size + 1):
+                            context_node_pos = center_node_pos + w
+                            # make soure not jump out sentence
+                            if context_node_pos < 0 or context_node_pos >= len(walk) or center_node_pos == context_node_pos:
+                                continue
+                            context_node_idx = walk[context_node_pos]
+                            idx_pairs.append((int(walk[center_node_pos]), int(context_node_idx)))
+                else:
+                    for context_node_idx in walk[1:]:
+                        # first item in the walk is the starting node
+                        idx_pairs.append((int(walk[0]), int(context_node_idx)))
 
                 # Do actual prediction
                 for src_node, tgt_node in idx_pairs:
