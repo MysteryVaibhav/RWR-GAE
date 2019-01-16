@@ -36,6 +36,7 @@ parser.add_argument('--dataset-str', type=str, default='cora', help='type of dat
 parser.add_argument('--walk-length', default=5, type=int, help='Length of the random walk started at each node')
 parser.add_argument('--window-size', default=3, type=int, help='Window size of skipgram model.')
 parser.add_argument('--number-walks', default=5, type=int, help='Number of random walks to start at each node')
+parser.add_argument('--full-number-walks', default=0, type=int, help='Number of random walks from each node')
 parser.add_argument('--lr_dw', type=float, default=0.001, help='Initial learning rate for regularization.')
 parser.add_argument('--context', type=int, default=0, help="whether to use context nodes for skipgram")
 
@@ -100,12 +101,17 @@ def gae_for(args):
         # After back-propagating gae loss, now do the deepWalk regularization
         if args.dw == 1:
             sg.train()
-            for walk in build_deepwalk_corpus_iter(G, num_paths=args.number_walks,
+            if args.full_number_walks > 0:
+                walks = build_deepwalk_corpus_iter(G, num_paths=args.full_number_walks,
+                                                   path_length=args.walk_length, alpha=0,
+                                                   rand=random.Random(SEED))
+            else:
+                walks = build_deepwalk_corpus_iter(G, num_paths=args.number_walks,
                                                    path_length=args.walk_length, alpha=0,
                                                    rand=random.Random(SEED),
                                                    chunk=epoch % chunks,
-                                                   nodes=nodes_in_G):
-
+                                                   nodes=nodes_in_G)
+            for walk in walks:
                 idx_pairs = []
                 if args.context == 1:
                     # Construct the pairs for predicting context node
