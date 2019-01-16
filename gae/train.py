@@ -18,7 +18,7 @@ import torch.nn.functional as F
 from gae.model import GCNModelVAE, GCNModelAE
 from gae.optimizer import loss_function
 from gae.utils import load_data, mask_test_edges, preprocess_graph, get_roc_score
-from deepWalk.graph import load_edgelist_from_csr_matrix, build_deepwalk_corpus_iter
+from deepWalk.graph import load_edgelist_from_csr_matrix, build_deepwalk_corpus_iter, build_deepwalk_corpus
 from deepWalk.skipGram import SkipGram
 from sklearn.cluster import KMeans
 from gae.clustering_metric import clustering_metrics
@@ -102,9 +102,9 @@ def gae_for(args):
         if args.dw == 1:
             sg.train()
             if args.full_number_walks > 0:
-                walks = build_deepwalk_corpus_iter(G, num_paths=args.full_number_walks,
-                                                   path_length=args.walk_length, alpha=0,
-                                                   rand=random.Random(SEED))
+                walks = build_deepwalk_corpus(G, num_paths=args.full_number_walks,
+                                              path_length=args.walk_length, alpha=0,
+                                              rand=random.Random(SEED))
             else:
                 walks = build_deepwalk_corpus_iter(G, num_paths=args.number_walks,
                                                    path_length=args.walk_length, alpha=0,
