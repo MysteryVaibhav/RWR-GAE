@@ -1,6 +1,11 @@
 from sklearn import metrics
 from munkres import Munkres
 import numpy as np
+from sklearn.manifold import TSNE
+import matplotlib
+
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 
 class clustering_metrics:
@@ -71,3 +76,20 @@ class clustering_metrics:
         # fh.close()
 
         return acc, nmi, adjscore
+
+    @staticmethod
+    def plot(X, fig, col, size, true_labels):
+        ax = fig.add_subplot(1, 1, 1)
+        for i, point in enumerate(X):
+            ax.scatter(point[0], point[1], s=size, c=col[true_labels[i]])
+
+    def plotClusters(self, tqdm, hidden_emb, true_labels):
+        tqdm.write('Start plotting using TSNE...')
+        # Doing dimensionality reduction for plotting
+        tsne = TSNE(n_components=2)
+        X_tsne = tsne.fit_transform(hidden_emb)
+        # Plot figure
+        fig = plt.figure()
+        self.plot(X_tsne, fig, ['red', 'green', 'blue', 'brown', 'purple', 'yellow', 'pink', 'orange'], 4, true_labels)
+        fig.savefig("plot.png")
+        tqdm.write("Finished plotting")

@@ -26,8 +26,8 @@ from tqdm import tqdm
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='gcn_vae', help="models used")
-parser.add_argument('--dw', type=int, default=1, help="whether to use deepWalk regularization, 0/1")
-parser.add_argument('--epochs', type=int, default=20, help='Number of epochs to train.')
+parser.add_argument('--dw', type=int, default=0, help="whether to use deepWalk regularization, 0/1")
+parser.add_argument('--epochs', type=int, default=1, help='Number of epochs to train.')
 parser.add_argument('--hidden1', type=int, default=32, help='Number of units in hidden layer 1.')
 parser.add_argument('--hidden2', type=int, default=16, help='Number of units in hidden layer 2.')
 parser.add_argument('--lr', type=float, default=0.01, help='Initial learning rate.')
@@ -40,7 +40,8 @@ parser.add_argument('--full-number-walks', default=0, type=int, help='Number of 
 parser.add_argument('--lr_dw', type=float, default=0.001, help='Initial learning rate for regularization.')
 parser.add_argument('--context', type=int, default=0, help="whether to use context nodes for skipgram")
 
-parser.add_argument('--n-clusters', default=7, type=int, help='number of clusters')
+parser.add_argument('--n-clusters', default=7, type=int, help='number of clusters, 7 for cora, 6 for citeseer')
+parser.add_argument('--plot', type=int, default=1, help="whether to plot the clusters using tsne")
 args = parser.parse_args()
 
 
@@ -177,6 +178,9 @@ def gae_for(args):
     predict_labels = kmeans.predict(hidden_emb)
     cm = clustering_metrics(true_labels, predict_labels)
     cm.evaluationClusterModelFromLabel(tqdm)
+
+    if args.plot == 1:
+        cm.plotClusters(tqdm, hidden_emb, true_labels)
 
 
 if __name__ == '__main__':
