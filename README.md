@@ -34,7 +34,7 @@ VGAE (our impl) | 0.921715 | 0.927751
 ARGE | 0.924 | 0.932
 ARVGE | 0.924 | 0.926
 DW-GAE | 0.924 | 0.918
-DW-VGAE |  | 
+DW-VGAE | 0.926 | 0.918
 
 Clustering results:
 
