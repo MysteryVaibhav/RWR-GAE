@@ -58,8 +58,8 @@ GAE | 0.895 | 0.899
 VGAE | 0.908 | 0.92
 ARGE | 0.932 | 0.919
 ARVGE | 0.924 | 0.93
-DW-GAE |  |
-DW-VGAE |  | 
+DW-GAE | 0.921 | 0.915
+DW-VGAE | 0.913 | 0.908
 
 Clustering results:
 
