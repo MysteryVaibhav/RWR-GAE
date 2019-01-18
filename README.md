@@ -49,4 +49,27 @@ ARVGE | 0.638 | 0.450 | 0.627 | 0.624 | 0.374
 DW-GAE | 0.669 | **0.464** | 0.618 | 0.629 | **0.417**
 DW-VGAE | **0.685** | 0.455 | **0.668** | **0.685** | **0.417**
 
+### Results on Citeseer test set
+Link Prediction results:
+
+Model | ROC | AP
+---|---|---
+GAE | 0.895 | 0.899
+VGAE | 0.908 | 0.92
+ARGE | 0.932 | 0.919
+ARVGE | 0.924 | 0.93
+DW-GAE |  |
+DW-VGAE |  | 
+
+Clustering results:
+
+Model | Acc | NMI | F1 | Precision | ARI
+---|---|---|---|---|---
+GAE | 0.408 | 0.176 | 0.372 | 0.418 | 0.124
+VGAE | 0.344 | 0.156 | 0.308 | 0.349 | 0.093
+ARGE | 0.573 | **0.350** | 0.546 | 0.573 | 0.341
+ARVGE | 0.544 | 0.261 | 0.529 | 0.549 | 0.245
+DW-GAE | **0.616** | 0.344 | **0.585** | **0.605** | **0.343**
+DW-VGAE | 0.613 | 0.338 | 0.582 | 0.595 | 0.336
+
 Runs in 2-3 mins for cora dataset on cpu. The code currently doesn't support GPU.
