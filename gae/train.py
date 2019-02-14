@@ -39,7 +39,7 @@ parser.add_argument('--number-walks', default=5, type=int, help='Number of rando
 parser.add_argument('--full-number-walks', default=0, type=int, help='Number of random walks from each node')
 parser.add_argument('--lr_dw', type=float, default=0.001, help='Initial learning rate for regularization.')
 parser.add_argument('--context', type=int, default=0, help="whether to use context nodes for skipgram")
-
+parser.add_argument('--ns', type=int, default=1, help="whether to use negative samples for skipgram")
 parser.add_argument('--n-clusters', default=7, type=int, help='number of clusters, 7 for cora, 6 for citeseer')
 parser.add_argument('--plot', type=int, default=0, help="whether to plot the clusters using tsne")
 args = parser.parse_args()
@@ -130,15 +130,25 @@ def gae_for(args):
                     # first item in the walk is the starting node
                     curr_pair = (int(walk[0]), [int(context_node_idx) for context_node_idx in walk[1:]])
 
+                if args.ns == 1:
+                    neg_nodes = []
+                    pos_nodes = set(walk)
+                    while len(neg_nodes) < args.walk_length - 1:
+                        rand_node = random.randint(0, n_nodes)
+                        if rand_node not in pos_nodes:
+                            neg_nodes.append(rand_node)
+                    neg_nodes = torch.from_numpy(np.array(neg_nodes)).long()
 
                 # Do actual prediction
                 src_node = torch.from_numpy(np.array([curr_pair[0]])).long()
                 tgt_nodes = torch.from_numpy(np.array(curr_pair[1])).long()
                 optimizer_dw.zero_grad()
                 log_pos = sg(src_node, tgt_nodes, neg_sample=False)
-                loss_dw = log_pos
-                #y_true = torch.from_numpy(np.array(tgt_nodes)).long()
-                #loss_dw = F.nll_loss(log_softmax.view(1, -1), y_true)
+                if args.ns == 1:
+                    loss_neg = sg(src_node, neg_nodes, neg_sample=True)
+                    loss_dw = log_pos + loss_neg
+                else:
+                    loss_dw = log_pos
                 loss_dw.backward(retain_graph=True)
                 cur_dw_loss = loss_dw.item()
                 optimizer_dw.step()
