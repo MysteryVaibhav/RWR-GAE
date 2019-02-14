@@ -26,7 +26,7 @@ from tqdm import tqdm
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='gcn_vae', help="models used")
-parser.add_argument('--dw', type=int, default=0, help="whether to use deepWalk regularization, 0/1")
+parser.add_argument('--dw', type=int, default=1, help="whether to use deepWalk regularization, 0/1")
 parser.add_argument('--epochs', type=int, default=1, help='Number of epochs to train.')
 parser.add_argument('--hidden1', type=int, default=32, help='Number of units in hidden layer 1.')
 parser.add_argument('--hidden2', type=int, default=16, help='Number of units in hidden layer 2.')
@@ -113,10 +113,10 @@ def gae_for(args):
                                                    chunk=epoch % chunks,
                                                    nodes=nodes_in_G)
             for walk in walks:
-                idx_pairs = []
                 if args.context == 1:
                     # Construct the pairs for predicting context node
                     # for each node, treated as center word
+                    curr_pair = (int(walk[center_node_pos]), [])
                     for center_node_pos in range(len(walk)):
                         # for each window position
                         for w in range(-args.window_size, args.window_size + 1):
@@ -125,21 +125,23 @@ def gae_for(args):
                             if context_node_pos < 0 or context_node_pos >= len(walk) or center_node_pos == context_node_pos:
                                 continue
                             context_node_idx = walk[context_node_pos]
-                            idx_pairs.append((int(walk[center_node_pos]), int(context_node_idx)))
+                            curr_pair[1].append(int(context_node_idx))
                 else:
-                    for context_node_idx in walk[1:]:
-                        # first item in the walk is the starting node
-                        idx_pairs.append((int(walk[0]), int(context_node_idx)))
+                    # first item in the walk is the starting node
+                    curr_pair = (int(walk[0]), [int(context_node_idx) for context_node_idx in walk[1:]])
+
 
                 # Do actual prediction
-                for src_node, tgt_node in idx_pairs:
-                    optimizer_dw.zero_grad()
-                    log_softmax = sg(src_node, mu)
-                    y_true = torch.from_numpy(np.array([tgt_node])).long()
-                    loss_dw = F.nll_loss(log_softmax.view(1, -1), y_true)
-                    loss_dw.backward(retain_graph=True)
-                    cur_dw_loss = loss_dw.item()
-                    optimizer_dw.step()
+                src_node = torch.from_numpy(np.array([curr_pair[0]])).long()
+                tgt_nodes = torch.from_numpy(np.array(curr_pair[1])).long()
+                optimizer_dw.zero_grad()
+                log_pos = sg(src_node, tgt_nodes, neg_sample=False)
+                loss_dw = log_pos
+                #y_true = torch.from_numpy(np.array(tgt_nodes)).long()
+                #loss_dw = F.nll_loss(log_softmax.view(1, -1), y_true)
+                loss_dw.backward(retain_graph=True)
+                cur_dw_loss = loss_dw.item()
+                optimizer_dw.step()
 
         loss = loss_function(preds=model.dc(z), labels=adj_label,
                              mu=mu, logvar=logvar, n_nodes=n_nodes,
