@@ -134,7 +134,7 @@ def gae_for(args):
                     neg_nodes = []
                     pos_nodes = set(walk)
                     while len(neg_nodes) < args.walk_length - 1:
-                        rand_node = random.randint(0, n_nodes)
+                        rand_node = random.randint(0, n_nodes - 1)
                         if rand_node not in pos_nodes:
                             neg_nodes.append(rand_node)
                     neg_nodes = torch.from_numpy(np.array(neg_nodes)).long()
