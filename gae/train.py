@@ -41,7 +41,7 @@ parser.add_argument('--lr_dw', type=float, default=0.001, help='Initial learning
 parser.add_argument('--context', type=int, default=0, help="whether to use context nodes for skipgram")
 
 parser.add_argument('--n-clusters', default=7, type=int, help='number of clusters, 7 for cora, 6 for citeseer')
-parser.add_argument('--plot', type=int, default=1, help="whether to plot the clusters using tsne")
+parser.add_argument('--plot', type=int, default=0, help="whether to plot the clusters using tsne")
 args = parser.parse_args()
 
 
@@ -170,6 +170,7 @@ def gae_for(args):
             cm.evaluationClusterModelFromLabel(tqdm)
             roc_score, ap_score = get_roc_score(hidden_emb, adj_orig, test_edges, test_edges_false)
             tqdm.write('ROC: {}, AP: {}'.format(roc_score, ap_score))
+            np.save('logs/emb_epoch_{}.npy'.format(epoch + 1), hidden_emb)
 
     tqdm.write("Optimization Finished!")
 
